@@ -62,21 +62,21 @@ open class BinarySearchTree<T, K: Comparable<K>>
 
 class AVLTree<T, K: Comparable<K>>: BinarySearchTree<T, K>()
 {
-    protected inner class AVLNode(_value: T, _key: K): BinaryTreeNode(_value, _key) {
+    protected inner class AVLNode(_value: T, _key: K): BinarySearchTree<T, K>.BinaryTreeNode(_value, _key) {
         var flag = 0
         var parent: AVLNode? = null
 
-        constructor(_value: T, _key: K, _flag: Int, _parent: AVLNode): AVLNode(_value, _key) {
+        constructor(_value: T, _key: K, _flag: Int, _parent: AVLNode): this(_value, _key) {
             flag = _flag
             parent = _parent
         }
 
-        fun rotate() {
+        fun rotate() { //what parameters do we need for this function?
 
         }
     }
 
-    override var root: AVLNode? = null
+    override var root: AVLNode? = null //still doesn't work
 
     override fun insert(value: T, key: K) {
         //TODO
@@ -85,22 +85,22 @@ class AVLTree<T, K: Comparable<K>>: BinarySearchTree<T, K>()
 
 class RBTree<T, K: Comparable<K>>: BinarySearchTree<T, K>()
 {
-    protected inner class RBNode(_value: T, _key: K): BinaryTreeNode(_value, _key)
+    protected inner class RBNode(_value: T, _key: K): BinarySearchTree<T, K>.BinaryTreeNode(_value, _key)
     {
         var color = 0
         var parent: RBNode? = null
 
-        constructor(_value: T, _key: K, _color: Int, _parent: RBNode): RBNode(_value, _key) {
+        constructor(_value: T, _key: K, _color: Int, _parent: RBNode): this(_value, _key) {
             color = _color
             parent = _parent
         }
 
-        fun rotate() {
+        fun rotate() { //what parameters do we need for this function?
 
         }
     }
 
-    override var root: RBNode? = null
+    override var root: RBNode? = null //still doesn't work
 
     override fun insert(value: T, key: K) {
         //TODO
