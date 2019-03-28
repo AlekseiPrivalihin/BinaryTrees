@@ -40,7 +40,7 @@ abstract class BalancedSearchTree<T, K: Comparable<K>>: BinarySearchTree<T, K>()
 
 
 class AVLTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
-    protected inner class AVLNode(...): BinaryTreeNode(...)
+    private inner class AVLNode(...): BinaryTreeNode(...)
 
     protected override fun createNode(...): BinaryTreeNode {
         return AVLNode(...)
@@ -52,7 +52,7 @@ class AVLTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
 }
 
 class RBTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
-    protected inner class RBNode(...): BinaryTreeNode(...)
+    private inner class RBNode(...): BinaryTreeNode(...)
 
     protected override fun createNode(...): BinaryTreeNode {
         return RBNode(...)
