@@ -1,12 +1,12 @@
 open class BinarySearchTree<T, K: Comparable<K>> {
     protected open inner class BinaryTreeNode(...)
 
-    protected open var root: BinaryTreeNode? = null
+    protected var root: BinaryTreeNode? = null
 
     val height: Boolean
         get() = ...
 
-    open fun find(key: K): T? {
+    fun find(key: K): T? {
         //...
         return null
     }
