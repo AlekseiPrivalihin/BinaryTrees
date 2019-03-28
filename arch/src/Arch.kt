@@ -1,107 +1,64 @@
-open class BinarySearchTree<T, K: Comparable<K>>
-{
-    protected open inner class BinaryTreeNode(_value: T, _key: K) {
-        open var left: BinaryTreeNode? = null
-        open var right: BinaryTreeNode? = null
-        open var parent: BinaryTreeNode? = null
-        var value = _value
-        val key = _key
-    }
-
+open class BinarySearchTree<T, K: Comparable<K>> {
+    protected open inner class BinaryTreeNode(...)
 
     protected open var root: BinaryTreeNode? = null
 
-    public open fun find(key: K): T? {
-        var curNode: BinaryTreeNode? = this.root
+    val height: Boolean
+        get() = ...
 
-        while (curNode != null) {
-            when (curNode.key) {
-                key -> return curNode.value
-                (curNode.key > key) -> curNode = curNode.left
-                else -> curNode = curNode.right
-            }
-        }
-
+    open fun find(key: K): T? {
+        //...
         return null
     }
 
-    protected fun basicInsert(value: T, key: K): BinaryTreeNode {
-
-        if (this.root == null) {
-            this.root = BinaryTreeNode(value, key)
-            return this.root!!
-        }
-
-        var curNode = this.root!!
-
-        while (true) {
-            if (curNode.key == key) {
-                curNode.value = value
-                return curNode
-            }
-
-            if (curNode.key > key) {
-                if (curNode.left == null) {
-                    curNode.left = BinaryTreeNode(value, key)
-                    curNode.left!!.parent = curNode
-                    return curNode.left!!
-                }
-
-                curNode = curNode.left!!
-            }
-            else {
-                if (curNode.right == null) {
-                    curNode.right = BinaryTreeNode(value, key)
-                    curNode.right!!.parent = curNode
-                    return curNode.right!!
-                }
-
-                curNode = curNode.right!!
-            }
-        }
-
+    open fun insert(value: T, key: K): Boolean {
+        return basicInsert(value, key) != null
     }
 
-    public open fun insert(value: T, key: K) {
-        basicInsert(value, key)
+    protected open fun createNode(...): BinaryTreeNode {
+        return BinaryTreeNode(...)
+    }
+
+    protected fun basicInsert(value: T, key: K): BinaryTreeNode? {
+        // returns 'null' if key was found
+
+        // root = createNode(...)
+        // node.left = createNode(...)
+        // node.right = createNode(...)
     }
 }
 
 abstract class BalancedSearchTree<T, K: Comparable<K>>: BinarySearchTree<T, K>() {
-
-    protected enum class Side {LEFT, RIGHT}
-
-    protected fun BinaryTreeNode.rotate(side: Side) {
-        //TODO
-    }
-
     protected abstract fun balance(node: BinaryTreeNode)
 
-    override fun insert(value: T, key: K) {
-        balance(basicInsert(value, key))
+    override fun insert(value: T, key: K): Boolean {
+        val inserted = basicInsert(value, key) ?: return false
+        balance(inserted)
+        return true
     }
 }
 
 
 class AVLTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
-    protected inner class AVLNode(_value: T, _key: K): BinaryTreeNode(_value, _key) {
-        var flag = 0
+    protected inner class AVLNode(...): BinaryTreeNode(...)
 
+    protected open fun createNode(...): BinaryTreeNode {
+        return AVLNode(...)
     }
 
     override fun balance(node: BinaryTreeNode) {
-        //TODO
+        //...
     }
 }
 
-class RBTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>()
-{
-    protected inner class RBNode(_value: T, _key: K): BinaryTreeNode(_value, _key)
-    {
-        var color = 0
+class RBTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
+    protected inner class RBNode(...): BinaryTreeNode(...)
+
+    protected open fun createNode(...): BinaryTreeNode {
+        return RBNode(...)
     }
 
     override fun balance(node: BinaryTreeNode) {
-        //TODO
+        //...
     }
 }
