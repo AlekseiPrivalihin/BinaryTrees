@@ -1,6 +1,5 @@
-open class BinarySearchTree<T, K: Comparable<K>>
-{
-    protected open inner class BinaryTreeNode(_value: T, _key: K) {
+open class BinarySearchTree<T, K : Comparable<K>> {
+    public open inner class BinaryTreeNode(_value: T, _key: K) {
         open var left: BinaryTreeNode? = null
         open var right: BinaryTreeNode? = null
         open var parent: BinaryTreeNode? = null
@@ -25,10 +24,14 @@ open class BinarySearchTree<T, K: Comparable<K>>
         return null
     }
 
+    protected open fun createNode(value: T, key: K): BinaryTreeNode {
+        return BinaryTreeNode(value, key)
+    }
+
     protected fun basicInsert(value: T, key: K): BinaryTreeNode {
 
         if (this.root == null) {
-            this.root = BinaryTreeNode(value, key)
+            this.root = createNode(value, key)
             return this.root!!
         }
 
@@ -42,16 +45,15 @@ open class BinarySearchTree<T, K: Comparable<K>>
 
             if (curNode.key > key) {
                 if (curNode.left == null) {
-                    curNode.left = BinaryTreeNode(value, key)
+                    curNode.left = createNode(value, key)
                     curNode.left!!.parent = curNode
                     return curNode.left!!
                 }
 
                 curNode = curNode.left!!
-            }
-            else {
+            } else {
                 if (curNode.right == null) {
-                    curNode.right = BinaryTreeNode(value, key)
+                    curNode.right = createNode(value, key)
                     curNode.right!!.parent = curNode
                     return curNode.right!!
                 }
@@ -67,9 +69,9 @@ open class BinarySearchTree<T, K: Comparable<K>>
     }
 }
 
-abstract class BalancedSearchTree<T, K: Comparable<K>>: BinarySearchTree<T, K>() {
+abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>() {
 
-    protected enum class Side {LEFT, RIGHT}
+    protected enum class Side { LEFT, RIGHT }
 
     protected fun BinaryTreeNode.rotate(side: Side) {
         //TODO
@@ -83,10 +85,14 @@ abstract class BalancedSearchTree<T, K: Comparable<K>>: BinarySearchTree<T, K>()
 }
 
 
-class AVLTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
-    protected inner class AVLNode(_value: T, _key: K): BinaryTreeNode(_value, _key) {
+class AVLTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
+    public inner class AVLNode(_value: T, _key: K) : BinaryTreeNode(_value, _key) {
         var flag = 0
 
+    }
+
+    protected override fun createNode(value: T, key: K): BinaryTreeNode {
+        return AVLNode(value, key)
     }
 
     override fun balance(node: BinaryTreeNode) {
@@ -94,11 +100,13 @@ class AVLTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>() {
     }
 }
 
-class RBTree<T, K: Comparable<K>>: BalancedSearchTree<T, K>()
-{
-    protected inner class RBNode(_value: T, _key: K): BinaryTreeNode(_value, _key)
-    {
+class RBTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
+    public inner class RBNode(_value: T, _key: K) : BinaryTreeNode(_value, _key) {
         var color = 0
+    }
+
+    protected override fun createNode(value: T, key: K): BinaryTreeNode {
+        return RBNode(value, key)
     }
 
     override fun balance(node: BinaryTreeNode) {
