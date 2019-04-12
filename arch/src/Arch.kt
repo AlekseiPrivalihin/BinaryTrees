@@ -83,12 +83,10 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
 
     inner class BalancedNode(_value: T, _key: K, _parent: Node?): Node(_value, _key, _parent) {
         var flag = 0
-    }
 
-    protected enum class Side { LEFT, RIGHT }
+        fun rotateLeft() = TODO()
 
-    protected fun Node.rotate(side: Side) {
-        //TODO
+        fun rotateRight() = TODO()
     }
 
     protected override fun createNode(value: T, key: K, parent: Node?): Node {
