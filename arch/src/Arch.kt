@@ -1,8 +1,8 @@
 import kotlin.collections.Iterator
 
-class BinarySearchTreeIterator<T>: Iterator<T>(
-    node: BinarySearchTree<T, *>.Node?
-) {
+class BinarySearchTreeIterator<T>(
+        node: BinarySearchTree<T, *>.Node?
+): Iterator<T> {
     override operator fun hasNext(): Boolean = TODO()
 
     override operator fun next(): T = TODO()
@@ -38,7 +38,6 @@ open class BinarySearchTree<T, K : Comparable<K>>: Iterable<T> {
     }
 
     protected fun basicInsert(value: T, key: K): Node? {
-
         if (this.root == null) {
             this.root = createNode(value, key, null)
             return this.root
@@ -96,7 +95,7 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
     protected abstract fun balance(node: Node)
 
     override fun insert(value: T, key: K) {
-        val insertedNode = basiInsert(value, key)
+        val insertedNode = basicInsert(value, key)
 
         if (insertedNode != null)
             balance(insertedNode)
