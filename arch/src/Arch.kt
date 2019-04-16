@@ -1,4 +1,4 @@
-open class BinarySearchTree<T, K : Comparable<K>>: Iterable<T> {
+open class BinarySearchTree<T, K : Comparable<K>> : Iterable<T> {
     public open inner class Node(_value: T, _key: K) {
         var left: Node? = null
         var right: Node? = null
@@ -7,8 +7,10 @@ open class BinarySearchTree<T, K : Comparable<K>>: Iterable<T> {
         val key = _key
     }
 
-    public inner class Iterator: kotlin.collections.Iterator<T> {
-        // TODO
+    public inner class Iterator : kotlin.collections.Iterator<T> {
+        override operator fun next(): T = TODO()
+
+        override operator fun hasNext(): Boolean = TODO()
     }
 
     protected open var root: Node? = null
@@ -20,9 +22,9 @@ open class BinarySearchTree<T, K : Comparable<K>>: Iterable<T> {
 
         while (curNode != null) {
             when (curNode.key) {
-                key -> return curNode.value
-                (curNode.key > key) -> curNode = curNode.left
-                else -> curNode = curNode.right
+                key               -> return curNode.value
+                curNode.key > key -> curNode = curNode.left
+                else              -> curNode = curNode.right
             }
         }
 
@@ -78,6 +80,7 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
     protected fun Node.rotateLeft() {
         //TODO
     }
+
     protected fun Node.rotateRight() {
         //TODO
     }
