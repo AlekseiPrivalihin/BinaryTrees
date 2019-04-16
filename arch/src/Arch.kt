@@ -13,7 +13,7 @@ open class BinarySearchTree<T, K : Comparable<K>> : Iterable<T> {
         override operator fun hasNext(): Boolean = TODO()
     }
 
-    protected open var root: Node? = null
+    protected var root: Node? = null
 
     final override operator fun iterator() = Iterator()
 
