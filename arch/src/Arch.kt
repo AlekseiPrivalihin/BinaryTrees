@@ -28,7 +28,7 @@ open class BinarySearchTree<T, K : Comparable<K>> {
         return BinaryTreeNode(value, key)
     }
 
-    protected fun basicInsert(value: T, key: K): BinaryTreeNode {
+    public open fun insert(value: T, key: K): BinaryTreeNode {
 
         if (this.root == null) {
             this.root = createNode(value, key)
@@ -64,9 +64,6 @@ open class BinarySearchTree<T, K : Comparable<K>> {
 
     }
 
-    public open fun insert(value: T, key: K) {
-        basicInsert(value, key)
-    }
 }
 
 abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>() {
@@ -78,12 +75,6 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
         //TODO
     }
 
-
-    protected abstract fun balance(node: BinaryTreeNode)
-
-    override fun insert(value: T, key: K) {
-        balance(basicInsert(value, key))
-    }
 }
 
 
@@ -97,8 +88,9 @@ class AVLTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
         return AVLNode(value, key)
     }
 
-    override fun balance(node: BinaryTreeNode) {
+    override fun insert(value: T, key: K): BinaryTreeNode {
         //TODO
+        return super<BalancedSearchTree>.insert(value, key)
     }
 }
 
@@ -111,7 +103,8 @@ class RBTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
         return RBNode(value, key)
     }
 
-    override fun balance(node: BinaryTreeNode) {
+    override fun insert(value: T, key: K): BinaryTreeNode {
         //TODO
+        return super<BalancedSearchTree>.insert(value, key)
     }
 }
