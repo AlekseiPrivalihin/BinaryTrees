@@ -71,8 +71,6 @@ open class BinarySearchTree<T, K : Comparable<K>> {
 
 abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>() {
 
-    protected enum class Side { LEFT, RIGHT }
-
     protected abstract fun BinaryTreeNode.rotateLeft()
     protected abstract fun BinaryTreeNode.rotateRight()
 
