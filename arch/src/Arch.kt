@@ -1,17 +1,17 @@
 open class BinarySearchTree<T, K : Comparable<K>> {
-    public open inner class BinaryTreeNode(_value: T, _key: K) {
-        open var left: BinaryTreeNode? = null
-        open var right: BinaryTreeNode? = null
-        open var parent: BinaryTreeNode? = null
+    public open inner class Node(_value: T, _key: K) {
+        open var left: Node? = null
+        open var right: Node? = null
+        open var parent: Node? = null
         var value = _value
         val key = _key
     }
 
 
-    protected open var root: BinaryTreeNode? = null
+    protected open var root: Node? = null
 
     public open fun find(key: K): T? {
-        var curNode: BinaryTreeNode? = this.root
+        var curNode: Node? = this.root
 
         while (curNode != null) {
             when (curNode.key) {
@@ -24,11 +24,11 @@ open class BinarySearchTree<T, K : Comparable<K>> {
         return null
     }
 
-    protected open fun createNode(value: T, key: K): BinaryTreeNode {
-        return BinaryTreeNode(value, key)
+    protected open fun createNode(value: T, key: K): Node {
+        return Node(value, key)
     }
 
-    public open fun insert(value: T, key: K): BinaryTreeNode {
+    public open fun insert(value: T, key: K): Node {
 
         if (this.root == null) {
             this.root = createNode(value, key)
@@ -68,10 +68,10 @@ open class BinarySearchTree<T, K : Comparable<K>> {
 
 abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>() {
 
-    protected fun BinaryTreeNode.rotateLeft() {
+    protected fun Node.rotateLeft() {
         //TODO
     }
-    protected fun BinaryTreeNode.rotateRight() {
+    protected fun Node.rotateRight() {
         //TODO
     }
 
@@ -79,31 +79,31 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
 
 
 class AVLTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
-    public inner class AVLNode(_value: T, _key: K) : BinaryTreeNode(_value, _key) {
+    public inner class AVLNode(_value: T, _key: K) : Node(_value, _key) {
         var flag = 0
 
     }
 
-    protected override fun createNode(value: T, key: K): BinaryTreeNode {
+    protected override fun createNode(value: T, key: K): Node {
         return AVLNode(value, key)
     }
 
-    override fun insert(value: T, key: K): BinaryTreeNode {
+    override fun insert(value: T, key: K): Node {
         //TODO
         return super<BalancedSearchTree>.insert(value, key)
     }
 }
 
 class RBTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
-    public inner class RBNode(_value: T, _key: K) : BinaryTreeNode(_value, _key) {
+    public inner class RBNode(_value: T, _key: K) : Node(_value, _key) {
         var color = 0
     }
 
-    protected override fun createNode(value: T, key: K): BinaryTreeNode {
+    protected override fun createNode(value: T, key: K): Node {
         return RBNode(value, key)
     }
 
-    override fun insert(value: T, key: K): BinaryTreeNode {
+    override fun insert(value: T, key: K): Node {
         //TODO
         return super<BalancedSearchTree>.insert(value, key)
     }
