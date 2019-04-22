@@ -1,8 +1,12 @@
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+
 open class BinarySearchTree<T, K : Comparable<K>> {
-    public open inner class Node(_value: T, _key: K) {
-        open var left: Node? = null
-        open var right: Node? = null
-        open var parent: Node? = null
+    public open inner class Node(_value: T, _key: K, _parent: Node?) {
+        var left: Node? = null
+        var right: Node? = null
+        var parent: Node? = _parent
         var value = _value
         val key = _key
     }
@@ -26,14 +30,14 @@ open class BinarySearchTree<T, K : Comparable<K>> {
         return null
     }
 
-    protected open fun createNode(value: T, key: K): Node {
-        return Node(value, key)
+    protected open fun createNode(value: T, key: K, parent: Node?): Node {
+        return Node(value, key, parent)
     }
 
     public open fun insert(value: T, key: K): Node {
 
         if (this.root == null) {
-            this.root = createNode(value, key)
+            this.root = createNode(value, key, null)
             size++
             return this.root!!
         }
@@ -48,7 +52,7 @@ open class BinarySearchTree<T, K : Comparable<K>> {
 
             if (curNode.key > key) {
                 if (curNode.left == null) {
-                    curNode.left = createNode(value, key)
+                    curNode.left = createNode(value, key, curNode)
                     curNode.left!!.parent = curNode
                     size++
                     return curNode.left!!
@@ -57,7 +61,7 @@ open class BinarySearchTree<T, K : Comparable<K>> {
                 curNode = curNode.left!!
             } else {
                 if (curNode.right == null) {
-                    curNode.right = createNode(value, key)
+                    curNode.right = createNode(value, key, curNode)
                     size++
                     curNode.right!!.parent = curNode
                     return curNode.right!!
@@ -137,29 +141,96 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
 
 
 class AVLTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
-    public inner class AVLNode(_value: T, _key: K) : Node(_value, _key) {
+    public inner class AVLNode(_value: T, _key: K, _parent: Node?) : Node(_value, _key, _parent) {
         var flag = 0
 
     }
 
-    protected override fun createNode(value: T, key: K): Node {
-        return AVLNode(value, key)
+    protected override fun createNode(value: T, key: K, parent: Node?): Node {
+        return AVLNode(value, key, parent)
     }
 
     override fun insert(value: T, key: K): Node {
-        //TODO
-        return super<BalancedSearchTree>.insert(value, key)
+        val oldSize = size
+        val inserted = super<BalancedSearchTree>.insert(value, key)
+
+        if (size == oldSize) {
+            return inserted
+        }
+
+        var curNode = inserted as AVLNode
+        var son = curNode
+        while (curNode.parent != null) {
+            val dad = curNode.parent as AVLNode
+
+            if (dad.left == curNode) {
+                dad.flag++
+            }
+            else {
+                dad.flag--
+            }
+
+            if (dad.flag == 0) {
+                break
+            }
+
+            if (abs(dad.flag) > 1) {
+                if (curNode == dad.left) {
+                    if (son == curNode.right) {
+                        curNode.rotateLeft()
+                        curNode.flag += min(0, son.flag) - 1
+                        son.flag += max(0, curNode.flag) + 1
+                    }
+
+                    dad.rotateRight()
+                    dad.flag += min(0, curNode.flag) - 1
+                    curNode.flag += max(0, dad.flag) + 1
+                }
+                else {
+                    if (son == curNode.left) {
+                        curNode.rotateRight()
+                        curNode.flag += max(0, son.flag) + 1
+                        son.flag += min(0, curNode.flag) - 1
+                    }
+
+                    dad.rotateRight()
+                    dad.flag += max(0, curNode.flag) + 1
+                    curNode.flag += min(0, dad.flag) - 1
+                }
+
+                break
+            }
+
+            son = curNode
+            curNode = dad
+        }
+
+        return inserted
+    }
+
+    public fun AVLNode.print() {
+        print("(")
+        this.left?.let { (this.left as AVLNode).print() }
+        print(")")
+        print("<$key $value $flag>")
+        print("(")
+        this.right?.let { (this.right as AVLNode).print() }
+        print(")")
+    }
+
+    public fun print() {
+        (root as AVLNode).print()
     }
 }
 
 class RBTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
-    public inner class RBNode(_value: T, _key: K) : Node(_value, _key) {
+    public inner class RBNode(_value: T, _key: K, _parent: Node?) : Node(_value, _key, _parent) {
         var color = 1 // 1 is red, 0 is black.
                       // Maybe I should replace it with an enum class
     }
 
-    protected override fun createNode(value: T, key: K): Node {
-        return RBNode(value, key)
+    protected override fun createNode(value: T, key: K, parent: Node?): Node {
+        return RBNode(value, key, parent)
     }
 
     override fun insert(value: T, key: K): Node {
@@ -231,7 +302,7 @@ class RBTree<T, K : Comparable<K>> : BalancedSearchTree<T, K>() {
 }
 
 fun main(args: Array<String>) {
-    val rbTree = RBTree<String, Int>()
+    val rbTree = AVLTree<String, Int>()
     rbTree.insert("fuck", 1)
     rbTree.insert("shit", 2)
     rbTree.insert("hell", 666)
