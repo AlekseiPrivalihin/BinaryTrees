@@ -1,0 +1,15 @@
+fun main(args: Array<String>) {
+    val rbTree = AVLTree<String, Int>()
+    rbTree.insert("fuck", 1)
+    rbTree.insert("shit", 2)
+    rbTree.insert("hell", 666)
+    rbTree.insert("sucker", 4)
+    rbTree.insert("nuts", 4)
+    rbTree.print()
+    print(rbTree.find(4))
+    print("\n")
+    print(rbTree.find(666))
+    print("\n")
+    print(rbTree.find(1))
+    print("\n${rbTree.size}\n")
+}
