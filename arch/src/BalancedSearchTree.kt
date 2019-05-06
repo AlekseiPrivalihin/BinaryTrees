@@ -1,4 +1,4 @@
-abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>() {
+abstract class BalancedSearchTree<K : Comparable<K>, V> : BinarySearchTree<K, V>() {
 
     protected fun Node.grandparent(): Node? {
         return this.parent?.parent
@@ -24,6 +24,7 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
     protected fun Node.rotateLeft() {
         val tmp = this.right?: return
         this.right = tmp.left
+        this.right?.let { this.right!!.parent = this }
         tmp.left = this
         tmp.parent = this.parent
         this.parent = tmp
@@ -44,6 +45,7 @@ abstract class BalancedSearchTree<T, K : Comparable<K>> : BinarySearchTree<T, K>
     protected fun Node.rotateRight() {
         val tmp = this.left?: return
         this.left = tmp.right
+        this.left?.let { this.left!!.parent = this }
         tmp.right = this
         tmp.parent = this.parent
         this.parent = tmp
