@@ -88,4 +88,19 @@ class BinarySearchTreeTest {
         assertEquals(root, leftSon.parent)
         assertEquals(root, leftSon.parent)
     }
+
+    @Test
+    fun sizeDifferenceBeforeAndAfterInsertionExistingKeyTest(){
+        val tree = BinarySearchTree<Int, Int>()
+
+        for (i in 1..5){
+            tree.insert(i, i+3)
+        }
+
+        val sizeBefore = tree.size
+
+        tree.insert(4, 4)
+
+        assertEquals(sizeBefore, tree.size)
+    }
 }
