@@ -134,4 +134,11 @@ class BinarySearchTreeTest {
 
         assertEquals(sizeBefore, tree.size)
     }
+
+    @Test
+    fun sizeOfEmptyTreeTest(){
+        val tree = BinarySearchTree<Int, Int>()
+
+        assertEquals(tree.size, 0)
+    }
 }
